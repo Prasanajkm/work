@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Country Specifications</title>
+	<link href="main.css" rel="stylesheet">
+</head>
+<body onload="countryDetails()">
+	<div class="header">
+			<h1>Country Details</h1>
+			<div id="country_details" style="background: #fff;margin-top: 50px;"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	function countryDetails() {
+		const urlParams = new URLSearchParams(window.location.search);
+		const name = urlParams.get('countryData');
+		const capital = urlParams.get('capital');
+		const population = urlParams.get('population');
+		const region = urlParams.get('region');
+		const flag = urlParams.get('flag');
+		console.log("gffdjfseduk");
+		var details = '<div class="name details"><span>country name:</span>' +name+'</div>'+
+						'<div class="flag details"><span>country flag:</span><img style="width:25px" src='+flag+'></div>'+
+						'<div class="capital details"><span>Capital:</span>' +capital+'</div>'+
+					   '<div class="religion details"><span>religion:</span>' +region+'</div>'+
+					   '<div class="population details"><span>Population:</span>' +population+'</div>';	
+		document.getElementById("country_details").innerHTML = details;
+	}
+</script>
+</html>

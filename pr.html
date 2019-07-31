@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<link rel="stylesheet" type="text/css" href="main.css">
+     <title> Awesome search box </title>
+</head>
+<body>
+<div class ="header">
+	<form>
+		<h1>Country<span style="color: red"> search </span></h1>
+		<div class="form-box">
+	<input class="search-txt "name="search"type="text" placeholder="Type to search"/>
+	<button class="search-btn"type="button">Search</button>
+</div>
+</body>
+<script type="text/javascript">
+
+	function searchFilter()
+	{
+		const url = 'https://restcountries.eu/rest/v2/all';
+		var input, filter ;
+			input = document.getElementById('searchInput');
+	    	filter = input.value.toUpperCase();
+	    	console.log(filter);
+		fetch(url).then(function(response) {
+			console.log(response);
+			return response.json();
+			}).then( data => {
+		 	var btn = '<div class="card">'
+			// iterate thge response data
+		  		var filterData = data.filter(datas => datas.name.toUpperCase().includes(filter));
+		  		console.log("name",filterData); 
+		  	filterData.forEach(function(res) {
+		  		console.log(res);
+				btn += '<button class="card_button" type="button" onclick="countryDetails(\''+res.alpha3Code +'\')">'+ res.name+ '<img style="width:25px" src='+res.flag+'>'+'</button>'; 
+			});
+			btn += '</div>';
+			document.getElementById("searchCountry").innerHTML = btn;
+			
+	    	// ul = document.getElementsByClassName("list-group")[0];
+	    	// li = ul.getElementsByTagName('li');
+
+		    // Loop through all list items, and hide those who don't match the search query
+		    // for (i = 0; i < li.length; i++) {            
+		    //     if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+		    //         li[i].style.display = "";
+		    //     } else {
+		    //         li[i].style.display = "none";
+		    //     }
+	    	// }
+	    }).catch(function(err) {
+		// Called if the server returns any errors
+	   console.log("Error:"+err);
+		});
+	}
+	function countryDetails(res) {
+		console.log(res);
+		var urls = "https://restcountries.eu/rest/v2/alpha/"+res
+		fetch(urls).then(function(response) {
+			console.log(response);
+			return response.json();
+			}).then( data => {
+				console.log(data);
+				window.location.href="countrydetails.html?countryData="+data.name+"&population="+data.population+"&flag="+data.flag+"&capital="+data.capital+"&region="+data.religion
+		});
+	} 
+</script>
+
+</html>
